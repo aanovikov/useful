@@ -55,7 +55,7 @@ class RequestHandler(BaseHTTPRequestHandler):
             self.wfile.write(b'Text was written to file')
         elif self.headers.get('run') == 'true':
             try:
-                subprocess.run('goracle', 'docker-start', '--background', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                subprocess.run(['goracle', 'docker-start', '--background'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                 self.send_response(200)
                 self.end_headers()
                 self.wfile.write(b'goracle start command executed successfully')
