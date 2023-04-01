@@ -1,0 +1,42 @@
+#!/usr/bin/expect -f
+
+# Spawn the command
+spawn goracle init
+
+# Wait for the prompt
+expect "Continue? \[y/N\]\r"
+
+# Answer "y"
+send "y\r"
+
+# Wait for the prompt
+expect "Use Algonode Algorand API service (recommended)? \[Y/n\]?\r"
+
+# Answer "y"
+send "y\r"
+
+# Wait for the prompt
+expect "Enter Algonode API auth token or press enter for free-tier default:\r"
+
+# Answer "y"
+send "y\r"
+
+# Wait for the prompt
+expect "Enter your main Algorand account address:"
+
+# Get the address from the file
+set addr [exec cat addr.txt]
+
+# Send the address
+send "$addr\r"
+
+# Wait for the prompt
+expect "When done, press Enter to continue..."
+
+while {![file exists "/root/web/done.txt"] || ![string match "*done*" [exec cat /root/web/done.txt]]} {
+    sleep 1
+}
+send "\r"
+
+# Wait for the command to complete
+expect eof
