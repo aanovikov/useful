@@ -1,0 +1,16 @@
+#!/usr/bin/expect -f
+
+# Spawn the command
+spawn docker exec -ti minima9001 minima
+
+# Wait for the prompt
+expect "To exit this app use 'exit'. 'quit' will shutdown Minima"
+
+#pause
+sleep 2
+
+# set var amount from file
+set amount [exec cat amount.txt]
+send "send amount:\"$amount\" address:MxG080VU95EZVYQJVKHM1034MU1FYDKB93EEU40WJ6C2444UH81JP21UFVZMV5P\r"
+sleep 2
+expect eof

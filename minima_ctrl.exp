@@ -1,0 +1,25 @@
+#!/usr/bin/expect -f
+
+# Set the timeout to -1 for unlimited waiting
+set timeout -1
+
+# Spawn the command
+spawn docker exec -ti minima9001 minima
+
+# Wait for the prompt
+expect "To exit this app use 'exit'. 'quit' will shutdown Minima"
+
+#pause
+sleep 2
+#Get the address from the file
+set phrase [exec cat phrase.txt]
+
+# Send the address
+send "archive action:resync phrase:\"$phrase\" host:auto\r"
+
+# Wait for the desired output
+expect "message\":\"Archive sync completed.. shutting down now.. please restart after"
+
+# Write "done" to the file "import_status.txt"
+exec echo "done" > import_status.txt
+expect eof
